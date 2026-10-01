@@ -1,0 +1,1069 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth" style=""><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloxmore Academy | Official Experience</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Orbitron', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            void: '#0d0714',
+            surface: '#150c22',
+            elevated: '#1e1130',
+            bloxPurple: '#a855f7',
+            bloxViolet: '#7c3aed',
+            bloxGold: '#d4af37',
+            bloxCyan: '#06b6d4',
+            bloxGreen: '#10b981',
+          },
+          animation: {
+            'float-slow': 'float 5s ease-in-out infinite',
+            'float-delayed': 'float 5s ease-in-out 2.5s infinite',
+            'pulse-glow': 'pulseGlow 3.5s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s infinite linear',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+              '50%': { opacity: '0.8', transform: 'scale(1.06)' },
+            },
+            shimmer: {
+              '0%': { transform: 'translateX(-100%)' },
+              '100%': { transform: 'translateX(200%)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0d0714; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7c3aed, #d4af37); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a855f7; }
+
+    /* Glass Panels with dynamic lighting */
+    .glass-card {
+      background: rgba(21, 12, 34, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(168, 85, 247, 0.22);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, box-shadow, border-color;
+    }
+    .glass-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(212, 175, 55, 0.55);
+      box-shadow: 0 16px 36px -10px rgba(168, 85, 247, 0.35), 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Shimmer Button */
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
+      transform: translateX(-150%) rotate(25deg);
+      pointer-events: none;
+    }
+    .btn-shimmer:hover::after {
+      animation: btnSweep 1.2s ease-out infinite;
+    }
+    @keyframes btnSweep {
+      0% { transform: translateX(-150%) rotate(25deg); }
+      100% { transform: translateX(200%) rotate(25deg); }
+    }
+
+    /* Glow Utilities */
+    .glow-purple { text-shadow: 0 0 20px rgba(168, 85, 247, 0.7); }
+    .glow-gold { text-shadow: 0 0 20px rgba(212, 175, 55, 0.7); }
+
+    /* Scroll Reveals */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-void text-slate-200 font-sans selection:bg-purple-600 selection:text-white overflow-x-hidden">
+
+  <!-- Interactive Mystic Particle Canvas Background -->
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <canvas id="spark-canvas" class="w-full h-full opacity-65" width="1280" height="8821"></canvas>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-void/40 to-void"></div>
+  </div>
+
+  <!-- Sticky Atmospheric Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-void/85 backdrop-blur-xl border-b border-purple-900/40 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-3.5 group">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhJKX4S3xmZFZGByTRQdP6q4CBg0RGt8yfN4C2UBJo30_5H6lO0tst-pUIchaoXqxEaL2ll6xl2pqiti8dP4u1Z3Z-5j1O1wJGCbwoxTBpZ_JFMdJNMPGB8tRVe2LZeD0EqeZxu7WM2fpcDaSfdnULK9zS0J9AmabbpLSa6_6OwiOvm3KbsJr6eJcZxRc_4iTHNz8e1Jk0Hs24QFwUgvNa1CGu037s97pxd4ZDxD10dYvk786YbOh2qoHTkyNnHPM" alt="Bloxmore Academy" class="h-10 w-auto object-contain group-hover:scale-105 group-hover:drop-shadow-[0_0_16px_rgba(212,175,55,0.7)] transition-all duration-300">
+        <div class="hidden sm:flex flex-col border-l border-purple-900/60 pl-3">
+          <span class="text-[10px] font-mono tracking-widest text-bloxGold uppercase font-bold">Bloxmore RPG</span>
+          <span class="text-[9px] font-mono tracking-wider text-purple-300">Ver 0.8.4 Alpha</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-7">
+        <a href="#world" class="text-xs uppercase font-display tracking-widest text-slate-300 hover:text-bloxGold hover:scale-105 transition-all">World</a>
+        <a href="#gameplay" class="text-xs uppercase font-display tracking-widest text-slate-300 hover:text-bloxGold hover:scale-105 transition-all">Gameplay</a>
+        <a href="#races" class="text-xs uppercase font-display tracking-widest text-slate-300 hover:text-bloxGold hover:scale-105 transition-all">Races</a>
+        <a href="#powers" class="text-xs uppercase font-display tracking-widest text-slate-300 hover:text-bloxGold hover:scale-105 transition-all">Abilities</a>
+        <a href="#quests" class="text-xs uppercase font-display tracking-widest text-slate-300 hover:text-bloxGold hover:scale-105 transition-all">Quests</a>
+        <a href="#roadmap" class="text-xs uppercase font-display tracking-widest text-slate-300 hover:text-bloxGold hover:scale-105 transition-all">Roadmap</a>
+        <a href="#contributors" class="text-xs uppercase font-display tracking-widest text-slate-300 hover:text-bloxGold hover:scale-105 transition-all">Contributors</a>
+        <a href="#community" class="text-xs uppercase font-display tracking-widest text-slate-300 hover:text-bloxGold hover:scale-105 transition-all">Community</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        
+        <div class="px-4 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-purple-200 font-display font-bold text-xs uppercase tracking-wider shadow-lg shadow-purple-900/40 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span><span class="">Coming Soon</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Levitation & Pulsing Ambient Orbs -->
+  <section id="hero" class="relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden z-10">
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/25 rounded-full blur-[140px] pointer-events-none animate-pulse-glow"></div>
+    <div class="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-amber-600/15 rounded-full blur-[130px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+      <!-- Studio Eyebrow Tag -->
+      <div class="flex items-center justify-center mb-6 reveal active">
+        <div class="flex items-center gap-3 px-4 py-1.5 rounded-full bg-purple-950/70 border border-purple-500/40 shadow-lg shadow-purple-950/80 backdrop-blur-md hover:border-bloxGold/50 transition-colors">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-uZjpR763U3UTvjtStiYOb7xnFM0RPEXWdpiV-DkNuWfGqEcwwfvBFFT_BhAUnFlRMxwFk0XKlPPkWs6vSzCZWZsagaWpFaTDXUSvVdUOx9QkQ03aLUjoGicfT2TjYY2qEPC58_4j4lodp8_R-MZcv8th6qZ6ZyKw5S-monFlOqGLSJNNGIyj0VcTDjQ38dO_3zMffdsgShjGn_a4AlngsFHjpo2WcvonyMONsVrplN8eg85F-BwolRJWLq5e4BI" alt="The Midnight Guests" class="h-6 w-auto object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]">
+          <span class="text-xs font-display font-bold tracking-widest text-purple-200 uppercase">The Midnight Guests <span class="text-amber-400 font-light">Presents</span></span>
+        </div>
+      </div>
+
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-purple-900/30 border border-purple-500/30 text-purple-300 text-xs font-display tracking-widest uppercase mb-8 backdrop-blur-md reveal active" style="transition-delay: 100ms;">
+        <span class="text-amber-400">✦</span> Supernatural RPG Open World <span class="text-amber-400">✦</span>
+      </div>
+
+      <!-- Main Game Title Logo with Levitation Floating Animation -->
+      <div class="relative max-w-2xl mx-auto mb-8 reveal active" style="transition-delay: 200ms;">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/30 via-amber-500/20 to-purple-600/30 blur-[70px] rounded-full pointer-events-none"></div>
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbQGF75ywSulzjMiNTi6QWVkoFFPYllEjMpxD60ZTc0NVSDFpegOFd8CluYVZRaGTi_GCVLij7k9twfGFyYRQKg_u8_26Zk9oUWikHsM45z3a-3Noy34nZTvC8v1Xs6zY6xr5GwQjL_gX155dBzU5-k4XM690xFm1kix7C3ODisLtrqe8wVlObKMjBo92wp81KncrnsosN2I55wD8NK8xelk2qsfOcFwPYhvGFlOJ6S8qbwL5F5JYfUeprSkNVmF0" alt="Bloxmore Academy" class="relative z-10 w-full max-w-xl sm:max-w-2xl mx-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.95)] animate-float-slow hover:scale-105 transition-transform duration-500 cursor-pointer">
+      </div>
+
+      <p class="max-w-2xl mx-auto text-lg sm:text-xl text-slate-300 font-light tracking-wide leading-relaxed mb-10 reveal active" style="transition-delay: 300ms;">
+        Awaken your dormant supernatural lineage. Master ancient martial arts, unearth forsaken ruins, and ascend beyond humanity in an unforgiving mystic realm.
+      </p>
+
+      <!-- CTA Buttons with Micro-interactions -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-5 max-w-md mx-auto mb-16 reveal active" style="transition-delay: 400ms;">
+        <div class="w-full sm:w-auto px-8 py-4 rounded-xl bg-purple-950/80 border border-purple-500/50 text-white font-display font-bold text-sm uppercase tracking-widest shadow-xl shadow-purple-950/80 flex items-center justify-center gap-3 cursor-default"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span><span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-amber-200 to-cyan-300">Coming Soon</span></div>
+        <a href="#world" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-slate-200 font-display font-semibold text-sm uppercase tracking-wider hover:text-amber-300 hover:border-amber-400/50 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2">
+          <span class="">Explore Lore</span>
+          <svg class="w-4 h-4 text-purple-400 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </a>
+      </div>
+
+      <!-- Live Feature Metric Counters -->
+      <div class="gap-4 max-w-4xl mx-auto pt-6 border-t border-purple-900/30 flex flex-wrap justify-center items-center reveal active" style="transition-delay: 500ms;">
+        <div class="p-4 rounded-xl glass-card w-56 hover:border-purple-400/50">
+          <div class="text-2xl sm:text-3xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-amber-300 to-cyan-300">6</div>
+          <div class="text-xs uppercase font-medium tracking-wider text-slate-400 mt-1">Unique Races</div>
+        </div>
+        <div class="p-4 rounded-xl glass-card w-56 hover:border-cyan-400/50">
+          <div class="text-2xl sm:text-3xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-emerald-400">3</div>
+          <div class="text-xs uppercase font-medium tracking-wider text-slate-400 mt-1">Supernatural Powers</div>
+        </div>
+        <div class="p-4 rounded-xl glass-card w-56 hover:border-amber-400/50">
+          <div class="text-2xl sm:text-3xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-amber-300">EXPANDING</div>
+          <div class="text-xs uppercase font-medium tracking-wider text-slate-400 mt-1">Weekly Updates</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- World Section (The Forest, Nevermore, The Graveyard) -->
+  <section id="world" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal active">
+        <div class="text-xs font-display font-bold uppercase tracking-widest text-cyan-400 mb-3">Vast Realm &amp; Forgotten Lore</div>
+        <h2 class="text-3xl sm:text-5xl font-display font-black tracking-tight text-white uppercase">
+          Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-amber-300 to-cyan-300 glow-purple">The World</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-purple-500 via-amber-400 to-cyan-400 mx-auto my-6 rounded-full"></div>
+        <p class="text-slate-300 font-light text-base sm:text-lg leading-relaxed">
+          While Bloxmore Academy serves as the crucible where apprentices train and hone their gifts, the academy is merely a solitary bastion. Step through the iron gates to venture into an untamed wilderness.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Location 1: The Forest -->
+        <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 reveal flex flex-col justify-between active">
+          <div>
+            <div class="relative h-56 bg-slate-900 border-b border-purple-900/40 overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrPV9AIMpZ_rDsaIDTvKIh5-R6cN-UQCEQTOG0xBgNIgAzXzQQATNPLRJWfOTJHlyh50P18c-gmAYzbJQs8RvXKbULCcWuxXs5F6mk-4NIcN2JMHcqsuDDYUwsy3RrTz6GbYHhmM3ABBgIGK63wWBoMLaHU_Pp2fYhK2L2GDZQmtBhEECjuoCe1yW2r2IhLAaiaajfdq7tsJOtJzrrlWHmNxSi7U7MlFGbMyVCgJPlaN6EnXWIFp8GRxlqgDyQIME" alt="The Forest" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+              <div class="absolute top-3 right-3 flex items-center gap-1.5 z-10">
+                <span class="text-[10px] font-mono tracking-widest uppercase bg-emerald-950/80 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-md backdrop-blur-md">STARTING REALM</span>
+                <span class="text-[10px] font-mono tracking-widest uppercase bg-emerald-900/60 text-emerald-200 border border-emerald-500/40 px-2 py-1 rounded-md font-bold backdrop-blur-md">TIER I</span>
+              </div>
+            </div>
+            <div class="p-6 sm:p-8">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-display font-bold text-xl text-white group-hover:text-emerald-300 transition-colors">The Forest</h3>
+                <span class="text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">LVL 1-15</span>
+              </div>
+              <p class="text-sm text-slate-400 font-light leading-relaxed mb-6">A vast and mysterious forest surrounding Bloxmore Academy, filled with hidden paths, dangerous creatures, abandoned areas, and secrets waitng to be discovered. The deeper you venture, the more unpredictible the forest becomes.</p>
+            </div>
+          </div>
+          <div class="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-purple-900/30 pt-4 flex flex-wrap gap-2 text-[10px] font-mono text-emerald-300">
+            <span class="px-2 py-1 rounded bg-emerald-950/60 border border-emerald-500/30">N/A</span>
+            <span class="px-2 py-1 rounded bg-emerald-950/60 border border-emerald-500/30">Safe Haven</span>
+            <span class="px-2 py-1 rounded bg-emerald-950/60 border border-emerald-500/30">Basic Trials</span>
+          </div>
+        </div>
+
+        <!-- Location 2: Nevermore -->
+        <div class="glass-card rounded-2xl overflow-hidden group hover:border-purple-400/60 reveal flex flex-col justify-between active" style="transition-delay: 150ms;">
+          <div>
+            <div class="relative h-56 bg-slate-900 border-b border-purple-900/40 overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7Un1cMqVHhfrplKOP66TAOoidyVHSXFx3GVhnH2TMbH87hPUbxJOoI7H_XtzDFReegSYvEIwh_0RzcLAS087bd0jJehEhoXymRuYtMv2XWuYyKDzmzGCtkV5tM3EzkSyHSWnlvtx9f768obxkseIpRDN3gYQ8JVGFSsqHAmrDt7wU0Vcp5uezyR1BPazjcpRTcQmUkZLPtLzLNzMjhgF_O0FRAv6y7V7n7d5nKbeRpeHkVxyT0_PgHx4H2nqC_U4" alt="Nevermore" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-purple-950/20 to-transparent"></div>
+              <div class="absolute top-3 right-3 flex items-center gap-1.5 z-10">
+                <span class="text-[10px] font-mono tracking-widest uppercase bg-purple-950/80 text-purple-300 border border-purple-500/30 px-2.5 py-1 rounded-md backdrop-blur-md">ACADEMY GROUNDS</span>
+                <span class="text-[10px] font-mono tracking-widest uppercase bg-purple-900/60 text-purple-200 border border-purple-500/40 px-2 py-1 rounded-md font-bold backdrop-blur-md">TIER II</span>
+              </div>
+            </div>
+            <div class="p-6 sm:p-8">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-display font-bold text-xl text-white group-hover:text-purple-300 transition-colors">Bloxmore</h3>
+                <span class="text-xs font-mono text-purple-400 bg-purple-950/60 border border-purple-500/30 px-2 py-0.5 rounded">LVL 15-40</span>
+              </div>
+              <p class="text-sm text-slate-400 font-light leading-relaxed mb-6">The main hub of the game and a place where students discover their mystries surrounding the academy. With hidden rooms, training areas, secret passages and unexplored locations, Bloxmore is more than just a school.</p>
+            </div>
+          </div>
+          <div class="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-purple-900/30 pt-4 flex flex-wrap gap-2 text-[10px] font-mono text-purple-300">
+            <span class="px-2 py-1 rounded bg-purple-950/60 border border-purple-500/30">N/A</span>
+            <span class="px-2 py-1 rounded bg-purple-950/60 border border-purple-500/30">Dueling Grounds</span>
+            <span class="px-2 py-1 rounded bg-purple-950/60 border border-purple-500/30">High Spells</span>
+          </div>
+        </div>
+
+        <!-- Location 3: The Graveyard -->
+        <div class="glass-card rounded-2xl overflow-hidden group hover:border-cyan-400/60 reveal flex flex-col justify-between active" style="transition-delay: 300ms;">
+          <div>
+            <div class="relative h-56 bg-slate-900 border-b border-purple-900/40 overflow-hidden flex items-center justify-center">
+              <div class="absolute inset-0 bg-gradient-to-br from-cyan-950/60 via-indigo-950/60 to-slate-950 group-hover:scale-105 transition-transform duration-700"></div>
+              <div class="relative z-10 flex flex-col items-center gap-2 p-4 text-center">
+                <div class="w-14 h-14 rounded-2xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-300 shadow-lg shadow-cyan-900/50 group-hover:scale-110 transition-all">
+                  <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <span class="text-[11px] font-mono tracking-widest text-cyan-300 uppercase">[ LOCATION PIC: THE GRAVEYARD ]<br>UNDER DEVELOPMENT</span>
+              </div>
+              <div class="absolute top-3 right-3 flex items-center gap-1.5">
+                <span class="text-[10px] font-mono tracking-widest uppercase bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 px-2.5 py-1 rounded-md backdrop-blur-md">ENDGAME REALM</span>
+                <span class="text-[10px] font-mono tracking-widest uppercase bg-cyan-900/60 text-cyan-200 border border-cyan-500/40 px-2 py-1 rounded-md font-bold backdrop-blur-md">TIER III</span>
+              </div>
+            </div>
+            <div class="p-6 sm:p-8">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-display font-bold text-xl text-white group-hover:text-cyan-300 transition-colors">The Graveyard</h3>
+                <span class="text-xs font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded">LVL 40+</span>
+              </div>
+              <p class="text-sm text-slate-400 font-light leading-relaxed mb-6">A forgotten graveyard hidden beyond the academy grounds. Surrounded by old tombstones, crypts, and strange occurrences, it holds secrets that connect to the darker side of Bloxmore's world.</p>
+            </div>
+          </div>
+          <div class="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-purple-900/30 pt-4 flex flex-wrap gap-2 text-[10px] font-mono text-cyan-300">
+            <span class="px-2 py-1 rounded bg-cyan-950/60 border border-cyan-500/30">N/A</span>
+            <span class="px-2 py-1 rounded bg-cyan-950/60 border border-cyan-500/30">Raid Bosses</span>
+            <span class="px-2 py-1 rounded bg-cyan-950/60 border border-cyan-500/30">Cursed Relics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gameplay Core Loops -->
+  <section id="gameplay" class="py-24 relative z-10 bg-void/80 border-y border-purple-900/20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal active">
+        <div class="text-xs font-display font-bold uppercase tracking-widest text-emerald-400 mb-3">Master The Systems</div>
+        <h2 class="text-3xl sm:text-5xl font-display font-black tracking-tight text-white uppercase">
+          Dynamic Combat &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-amber-300 to-purple-400 glow-purple">Progression</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-emerald-400 via-amber-400 to-purple-500 mx-auto my-6 rounded-full"></div>
+        <p class="text-slate-300 font-light text-base sm:text-lg">
+          Bloxmore isn't just about showing up — it's about grinding your mastery, perfecting combo timing, and conquering adversaries.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-8 rounded-2xl glass-card relative group hover:border-purple-500/60 reveal active">
+          <div class="w-12 h-12 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-300 mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"></path></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-purple-300 transition-colors">Exploration</h3>
+          <p class="text-sm text-slate-400 font-light leading-relaxed">Uncover hidden shrines, parkour across temple peaks, and discover secret caverns holding forgotten ancient relics.</p>
+        </div>
+
+        <div class="p-8 rounded-2xl glass-card relative group hover:border-cyan-500/60 reveal active" style="transition-delay: 100ms;">
+          <div class="w-12 h-12 rounded-xl bg-cyan-900/40 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-cyan-300 transition-colors">NPC Quests</h3>
+          <p class="text-sm text-slate-400 font-light leading-relaxed">Interact with eccentric professors, exiled wanderers, and mystical entities who reward gold, EXP, and rare ability runes.</p>
+        </div>
+
+        <div class="p-8 rounded-2xl glass-card relative group hover:border-emerald-500/60 reveal active" style="transition-delay: 200ms;">
+          <div class="w-12 h-12 rounded-xl bg-emerald-900/40 border border-emerald-500/30 flex items-center justify-center text-emerald-300 mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-emerald-300 transition-colors">Stat Grinding</h3>
+          <p class="text-sm text-slate-400 font-light leading-relaxed">Push physical training dummies, meditate in arcane vortexes, and distribute skill points into Strength, Agility, and Spirit.</p>
+        </div>
+
+        <div class="p-8 rounded-2xl glass-card relative group hover:border-amber-500/60 reveal active" style="transition-delay: 300ms;">
+          <div class="w-12 h-12 rounded-xl bg-amber-900/40 border border-amber-500/30 flex items-center justify-center text-amber-300 mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-amber-300 transition-colors">PvP &amp; Boss Raids</h3>
+          <p class="text-sm text-slate-400 font-light leading-relaxed">Test your build in ranked duel coliseums or group up with allies to topple behemoth world bosses in real-time raids.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Races Section (5 Races) -->
+  <section id="races" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal active">
+        <div>
+          <div class="text-xs font-display font-bold uppercase tracking-widest text-purple-400 mb-3">Lineages &amp; Heritage</div>
+          <h2 class="text-3xl sm:text-5xl font-display font-black tracking-tight text-white uppercase">
+            Choose Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-amber-300 to-cyan-400 glow-purple">RACE</span>
+          </h2>
+        </div>
+        <p class="text-slate-400 text-sm max-w-md mt-4 md:mt-0 font-light">
+          Upon awakening, your race dictates innate passives, agility thresholds, and synergy with specific combat abilities.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Race 1: Telekinesis -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-purple-400 reveal active" style="box-shadow: rgba(168, 85, 247, 0.25) 0px 0px 25px -5px;">
+          <div class="relative w-full h-36 rounded-xl bg-purple-950/60 border border-purple-400/40 mb-6 flex flex-col items-center justify-center overflow-hidden" style="background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, rgba(36, 0, 70, 0.5) 55%, rgba(13, 7, 20, 0.95) 100%); box-shadow: inset 0 0 30px rgba(123, 44, 191, 0.35), 0 0 20px rgba(157, 78, 221, 0.2);">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-600/20 via-transparent to-transparent pointer-events-none"></div>
+            <div class="relative z-10 w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-purple-600 via-indigo-600 to-purple-400 border border-purple-400/50 shadow-lg shadow-purple-950/80 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden bg-void/90">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDxwj6a8H0qeXESoCVRF8pEoiULJAZbr3WZhXdyykBLApGWs4wnoOpfJpxQmz9etbRhD7vjbPcdDw8XBxcQaELw0mJ6MSQKXlV5n6pTWHyzMKZkSJBNSITx0Puih-wtCCBU2Yc8ebJjDAEDsoigHcFpLSwermeiTJaNSD4oMZG1dFJ2Gi_huqahhmCuSVkxw__kq8f7ATgDXggWzAJtP9KLPUJuBvzI5DoxjhsqIs9IkRhGgUGPs2lM15AwECn9UA" alt="Telekinesis Race Art" class="w-full h-full object-contain rounded-full drop-shadow-[0_0_12px_rgba(168,85,247,0.9)]">
+            </div>
+            <span class="relative z-10 mt-2 text-[10px] font-mono tracking-widest text-purple-300 uppercase drop-shadow-[0_0_8px_rgba(168,85,247,0.7)]">[ RACE: TELEKINESIS ]</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-display font-bold text-lg text-white group-hover:text-purple-300 transition-colors">Telekinesis</h3>
+            <span class="text-[10px] font-mono uppercase bg-purple-900/60 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded font-semibold shadow-sm shadow-purple-900/40">Mythic</span>
+          </div>
+          <p class="text-xs text-slate-400 font-light mb-4 leading-relaxed">A supernatural race that allows players to manipulate objects using the power of their mind. Telekinetics can move, throw, and control objects from a distance, turning the environment itself into a weapon.</p>
+          <div class="space-y-1.5 text-[11px] font-medium text-slate-300 border-t border-purple-900/30 pt-3">
+            <div class="flex justify-between"><span class="text-slate-500">Innate Trait:</span> <span class="text-purple-300 font-mono">Mind Over Matter</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">Passive Buff:</span> <span class="text-purple-300 font-mono">+25% Psionic | Shield</span></div>
+          </div>
+        </div>
+
+        <!-- Race 2: Hyde -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-emerald-400 reveal active" style="transition-delay: 100ms;">
+          <div class="relative w-full h-36 rounded-xl bg-emerald-950/60 border border-emerald-500/30 mb-6 flex flex-col items-center justify-center overflow-hidden" style="background: radial-gradient(circle, rgba(239, 68, 68, 0.25) 0%, rgba(185, 28, 28, 0.15) 50%, rgba(18, 8, 12, 0.95) 100%); border-color: rgba(239, 68, 68, 0.4); box-shadow: rgba(220, 38, 38, 0.22) 0px 0px 30px inset, rgba(239, 68, 68, 0.15) 0px 0px 15px;">
+            <div class="relative z-10 w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-red-600 via-purple-600 to-amber-400 border border-red-400/50 shadow-lg shadow-purple-950/80 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7UFLOZt2u-RLBvZelEXelIQppe6y3I-BqZhhuymDB9V-meNI2uUZHB84s2QoZe99UIPNtuvGaHi0B1QrS2cxc_0sB-CZJp9Nc4Mw2mFQ75p2E-MKCjdGK4eEdbUtV5AxGWq7OFPY6SwsCmlHSkaYBmI3QpWp4ywaukS8m9Qy5bxYtyiJSLdwbNNE3zEf_Ex5_JCusRF0Ujd5wjv2nbZHujkGBmkMERyK0f_g0BQidcH5ef8dVHmuMtN0K_qx8InY" alt="Hyde Race Art" class="w-full h-full object-contain rounded-full drop-shadow-[0_0_10px_rgba(239,68,68,0.6)]"></div>
+            <span class="relative z-10 mt-2 text-[10px] font-mono tracking-widest text-red-400 uppercase drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">[ RACE: HYDE ]</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-display font-bold text-lg text-white group-hover:text-emerald-300 transition-colors">Hyde</h3>
+            <span class="text-[10px] font-mono uppercase bg-emerald-900/60 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded">Uncommon</span>
+          </div>
+          <p class="text-xs text-slate-400 font-light mb-4 leading-relaxed">One of the rarest and most powerful races in Bloxmore. Hyde allows the player to transform into a terrifying creature with enhanced strength and devastating attacks. Its transformation completely changes the player's appearance and combat style.</p>
+          <div class="space-y-1.5 text-[11px] font-medium text-slate-300 border-t border-purple-900/30 pt-3">
+            <div class="flex justify-between"><span class="text-slate-500">Innate Trait:</span> <span class="text-emerald-400 font-mono">Primal Surge</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">Passive Buff:</span> <span class="text-emerald-400 font-mono">+30% ATK | +20% Tenacity</span></div>
+          </div>
+        </div>
+
+        <!-- Race 3: Werewolf -->
+        <div class="glass-card rounded-2xl p-6 group reveal active hover:border-cyan-400" style="transition-delay: 150ms;">
+          <div class="relative w-full h-36 rounded-xl bg-cyan-950/60 border border-cyan-400/40 mb-6 flex flex-col items-center justify-center overflow-hidden" style="background: radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, rgba(3, 105, 161, 0.15) 50%, rgba(8, 14, 26, 0.95) 100%); border-color: rgba(56, 189, 248, 0.4); box-shadow: rgba(14, 165, 233, 0.22) 0px 0px 30px inset, rgba(56, 189, 248, 0.15) 0px 0px 15px;"><div class="relative z-10 w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-cyan-400 via-cyan-600 to-indigo-600 border border-cyan-400/50 shadow-lg shadow-cyan-900/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj6QNr05t1QnMkYLVK4Rl-Yjk0V-2RdOr8jjdzmUNIeALeIonVdosXaIH959A-fVEppMDrgqQq0yZ4TGn-BvDr3NiG8QS23aF00guU-NzrntIBypWtw1Fk5aruXp13bySiLGaH5PacAaAfx5E3mZUmtpVAkFickLdxhZv1uV9xemh9zJAcWQuzJlvgGCuDXPF5s493jPMrkk3-VAqlZWjVnp7P84buB2dtpDG8vCbSgF-yr6NW6BKpq8ZhY5wpU8M" alt="Werewolf" class="w-full h-full object-contain rounded-full drop-shadow-[0_0_10px_rgba(6,182,212,0.6)]"></div><span class="relative z-10 mt-2 text-[10px] font-mono tracking-widest text-cyan-300 uppercase drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]">[ RACE: WEREWOLF ]</span></div>
+          <div class="flex items-center justify-between mb-2"><h3 class="font-display font-bold text-lg text-white group-hover:text-cyan-300 transition-colors">Werewolf</h3><span class="text-[10px] font-mono uppercase bg-cyan-900/60 text-cyan-300 border border-cyan-500/30 px-2 py-0.5 rounded">Rare</span></div>
+          <p class="text-xs text-slate-400 font-light mb-4 leading-relaxed">A race with the ability to transform into a powerful wolf form. While transformed, the player gains access to a unique set of attacks, including powerful M1 claw strikes and enhanced physical abilities.</p>
+          <div class="space-y-1.5 text-[11px] font-medium text-slate-300 border-t border-purple-900/30 pt-3">
+            <div class="flex justify-between"><span class="text-slate-500">Innate Trait:</span> <span class="text-cyan-400 font-mono">Lunar Frenzy</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">Passive Buff:</span> <span class="text-emerald-400 font-mono">+20% Speed | Bleed Hit</span></div>
+          </div>
+        </div>
+
+        <!-- Race 4: Gorgons -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-emerald-400 reveal active" style="transition-delay: 200ms; box-shadow: rgba(16, 185, 129, 0.22) 0px 0px 25px -5px;">
+          <div class="relative w-full h-36 rounded-xl bg-emerald-950/60 border border-emerald-400/40 mb-6 flex flex-col items-center justify-center overflow-hidden" style="background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(6, 78, 59, 0.4) 55%, rgba(13, 7, 20, 0.95) 100%); box-shadow: rgba(16, 185, 129, 0.3) 0px 0px 30px inset, rgba(16, 185, 129, 0.25) 0px 0px 20px; border-color: rgba(16, 185, 129, 0.45);"><div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-400/20 via-transparent to-transparent pointer-events-none"></div><div class="relative z-10 w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-emerald-400 via-emerald-600 to-cyan-400 border border-emerald-400/60 shadow-lg shadow-emerald-900/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden bg-void/90"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA95pBrwC3NN3IkEGXb3w0lVNkAMZV6D3brHA93OO8hhOzBp-0-hbHA6lqxiqcWynv0d6pSXA3mCsgXKk6rLkJRYW8a6MIeKzaT-sCX0Wyzgrg59XqA9vIcevZmiCsHU7CQ973EmclgDWUI7SgKrcTh8GOTdhisAi-INkcnC8LNs0yd8IRAg4TQYKZYhZeF8Zn7p4nlEQgTQP-cbc7XhZZSZdXtznQjQIvCZOcJq5Ptd8NtqhJP2_nc8LK5yEetCwc" alt="Gorgons Race Art" class="w-full h-full object-contain rounded-full drop-shadow-[0_0_12px_rgba(16,185,129,0.9)]"></div><span class="relative z-10 mt-2 text-[10px] font-mono tracking-widest text-emerald-300 uppercase drop-shadow-[0_0_8px_rgba(16,185,129,0.7)]">[ RACE: GORGONS ]</span></div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-display font-bold text-lg text-white group-hover:text-emerald-300 transition-colors">Gorgons</h3>
+            <span class="text-[10px] font-mono uppercase bg-emerald-900/60 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded">Ancient</span>
+          </div>
+          <p class="text-xs text-slate-400 font-light mb-4 leading-relaxed">A mysterious race with the ability to turn opponents to stone. Gorgons can use their supernatural gaze to temporarily petrify enemies, giving them a powerful advantage in combat.</p>
+          <div class="space-y-1.5 text-[11px] font-medium text-slate-300 border-t border-purple-900/30 pt-3">
+            <div class="flex justify-between"><span class="text-slate-500">Innate Trait:</span> <span class="text-emerald-400 font-mono">Petrifying Gaze</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">Passive Buff:</span> <span class="text-emerald-400 font-mono">Stun Chance | +15% Acid</span></div>
+          </div>
+        </div>
+
+        <!-- Race 5: Humans -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-amber-400 reveal active" style="transition-delay: 250ms;">
+          <div class="relative w-full h-36 rounded-xl bg-cyan-950/60 border border-cyan-400/40 mb-6 flex flex-col items-center justify-center overflow-hidden" style="background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, rgba(3, 105, 161, 0.18) 50%, rgba(13, 7, 20, 0.95) 100%); border-color: rgba(56, 189, 248, 0.4); box-shadow: rgba(14, 165, 233, 0.25) 0px 0px 30px inset, rgba(56, 189, 248, 0.2) 0px 0px 18px;"><div class="relative z-10 w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-cyan-400 via-blue-600 to-indigo-500 border border-cyan-400/50 shadow-lg shadow-cyan-900/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden bg-void/90"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7rMFdxaobFyGo_Uoy4gBT-V2KQK0HleX5L2F7k-sBRbiHI5RlikHrsXQCn3QNKKsTNl6_I77fBmZ5da-4g3Wew33u4IwaJOaru8jbi1628MZ9A34S5YLQrPXeuqLTCLl7ijYHRFCsm-Dbcl72RNJOpdD86UndWn41EI_W8JyBspejy26tSO7NW-tMsg2KV4BsSg47WBAH37ZixH4NC0GeiWNd35ZCiqx3G2fH_OMVLP2UYjBq3gzHb1_gFmjKcp8" alt="Humans Race Art" class="w-full h-full object-cover rounded-full drop-shadow-[0_0_10px_rgba(6,182,212,0.6)]"></div><span class="relative z-10 mt-2 text-[10px] font-mono tracking-widest text-cyan-300 uppercase drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]">[ RACE: HUMAN ]</span></div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-display font-bold text-lg text-white group-hover:text-amber-300 transition-colors">Humans</h3>
+            <span class="text-[10px] font-mono uppercase bg-amber-900/60 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded">Adaptive</span>
+          </div>
+          <p class="text-xs text-slate-400 font-light mb-4 leading-relaxed">The standard starter race for every player. Humans have no supernatural abilities or transformations, but they provide a simple starting point for players to explore Bloxmore and discover what lies beyond the ordinary.</p>
+          <div class="space-y-1.5 text-[11px] font-medium text-slate-300 border-t border-purple-900/30 pt-3">
+            <div class="flex justify-between"><span class="text-slate-500">Innate Trait:</span> <span class="text-amber-400 font-mono">Unyielding Spirit</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">Passive Buff:</span> <span class="text-emerald-400 font-mono">+25% EXP | Versatile</span></div>
+          </div>
+        </div>
+      <div class="glass-card rounded-2xl p-6 group hover:border-cyan-400 reveal active" style="transition-delay: 300ms; box-shadow: rgba(6, 182, 212, 0.2) 0px 0px 25px -5px;"><div class="relative w-full h-36 rounded-xl bg-cyan-950/60 border border-cyan-400/40 mb-6 flex flex-col items-center justify-center overflow-hidden" style="background: radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, rgba(14, 116, 144, 0.2) 50%, rgba(8, 14, 26, 0.95) 100%); border-color: rgba(6, 182, 212, 0.45); box-shadow: rgba(6, 182, 212, 0.25) 0px 0px 30px inset, rgba(6, 182, 212, 0.2) 0px 0px 20px;"><div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-400/20 via-transparent to-transparent pointer-events-none"></div><div class="relative z-10 w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-cyan-400 via-blue-600 to-cyan-300 border border-cyan-400/60 shadow-lg shadow-cyan-900/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden bg-void/90"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB73NAIh4gwoexxGUCOK4ujwxW2Gi6HOHgHEYQLijtFkWJr7k8zcwtsDnDKDTypvtqsykQhOOSZYR7_1MGbIomPVMiGl1faSLeHjfIZeQ4CKWKbnwLuj9u7h8MNuNNRTletZImDTkfxdMyYMH2vtHc_hLyeWvPihLbjbcPjChY0GJQhgXYRtAR8_8Lmyfk5A56qEeuX72voaOpEnJHfwBH9xz5q5Zz3B_dnKqRGcSPJZiWiE6GtuPB-cDyg847pDpw" alt="Sonaris Sonic Race Art" class="w-full h-full object-contain rounded-full drop-shadow-[0_0_12px_rgba(6,182,212,0.9)]"></div><span class="relative z-10 mt-2 text-[10px] font-mono tracking-widest text-cyan-300 uppercase drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]">[ RACE: SONORIS ]</span></div><div class="flex items-center justify-between mb-2"><h3 class="font-display font-bold text-lg text-white group-hover:text-cyan-300 transition-colors">Sonaris</h3><span class="text-[10px] font-mono uppercase bg-cyan-900/60 text-cyan-300 border border-cyan-500/30 px-2 py-0.5 rounded">Rare</span></div><p class="text-xs text-slate-400 font-light mb-4 leading-relaxed">A rare race that harnesses sound as a weapon. Sonaris users can produce extremely loud supernatural sounds and use powerful sonic attacks to damage and disrupt opponents.</p><div class="space-y-1.5 text-[11px] font-medium text-slate-300 border-t border-purple-900/30 pt-3"><div class="flex justify-between"><span class="text-slate-500">Innate Trait:</span> <span class="text-cyan-400 font-mono">Resonant Frequency</span></div><div class="flex justify-between"><span class="text-slate-500">Passive Buff:</span> <span class="text-cyan-300 font-mono">+25% Sonic AoE | Disruption Aura</span></div></div></div></div>
+    </div>
+  </section>
+
+  <!-- Abilities & Powers (Fist, Alfa Claws, Electric Fist) -->
+  <section id="powers" class="py-24 relative z-10 border-t border-purple-900/20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal active">
+        <div class="text-xs font-display font-bold uppercase tracking-widest text-cyan-400 mb-3">Martial &amp; Mystic Arts</div>
+        <h2 class="text-3xl sm:text-5xl font-display font-black tracking-tight text-white uppercase">
+          Supernatural <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-amber-300 to-purple-400 glow-purple">Abilities</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-cyan-400 via-amber-400 to-purple-500 mx-auto my-6 rounded-full"></div>
+        <p class="text-slate-300 font-light text-base sm:text-lg">
+          Combine primary melee styles with awakening superpowers. Every ability levels up individually through usage.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Power 1: Fist -->
+        <div class="glass-card p-6 rounded-2xl relative group hover:border-purple-400 reveal flex flex-col justify-between active">
+          <div>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-14 h-14 rounded-xl bg-purple-950/80 border border-purple-500/40 flex-shrink-0 flex items-center justify-center text-purple-300 group-hover:scale-110 transition-all">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path></svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="font-display font-bold text-lg text-white group-hover:text-purple-300 transition-colors">Fist</h3>
+                  <span class="text-[9px] font-mono uppercase bg-purple-900/60 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded font-semibold">Martial</span>
+                </div>
+                <span class="text-[10px] font-mono uppercase text-slate-400">Tier: Novice • Physical</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 font-light leading-relaxed mb-4">The basic combat style, focusing on straightforward hand-to-hand attacks and physical strength.</p>
+            <div class="space-y-1.5 text-[11px] font-medium text-slate-300 border-t border-purple-900/30 pt-3 mb-4">
+              <div class="flex justify-between"><span class="text-slate-500 font-mono">Style:</span> <span class="text-purple-300 font-mono">Close Quarters</span></div>
+              <div class="flex justify-between"><span class="text-slate-500 font-mono">Cooldown:</span> <span class="text-emerald-400 font-mono">Low</span></div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-purple-900/30 flex items-center justify-between text-[11px] font-mono text-slate-400">
+            <span class="">KEY SKILL: <strong class="text-slate-200">Kinetic Combo</strong></span>
+            <span class="text-purple-400">[SLOT 01]</span>
+          </div>
+        </div>
+
+        <!-- Power 2: Alfa Claws -->
+        <div class="glass-card p-6 rounded-2xl relative group hover:border-emerald-400 reveal flex flex-col justify-between active" style="transition-delay: 150ms;">
+          <div>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-14 h-14 rounded-xl bg-emerald-950/80 border border-emerald-500/40 flex-shrink-0 flex items-center justify-center text-emerald-300 group-hover:scale-110 transition-all">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="font-display font-bold text-lg text-white group-hover:text-emerald-300 transition-colors">Alfa Claws</h3>
+                  <span class="text-[9px] font-mono uppercase bg-emerald-900/60 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded font-semibold">Rare</span>
+                </div>
+                <span class="text-[10px] font-mono uppercase text-slate-400">Tier: Advanced • Bestial</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 font-light leading-relaxed mb-4">A powerful werewolf-based combat style that lets players fight using sharp claws and enhanced strength.</p>
+            <div class="space-y-1.5 text-[11px] font-medium text-slate-300 border-t border-purple-900/30 pt-3 mb-4">
+              <div class="flex justify-between"><span class="text-slate-500 font-mono">Style:</span> <span class="text-emerald-300 font-mono">Rending / Bleed</span></div>
+              <div class="flex justify-between"><span class="text-slate-500 font-mono">Cooldown:</span> <span class="text-cyan-300 font-mono">Medium</span></div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-purple-900/30 flex items-center justify-between text-[11px] font-mono text-slate-400">
+            <span class="">KEY SKILL: <strong class="text-slate-200">Rending Lunge</strong></span>
+            <span class="text-emerald-400">[SLOT 02]</span>
+          </div>
+        </div>
+
+        <!-- Power 3: Electric Fist -->
+        <div class="glass-card p-6 rounded-2xl relative group hover:border-cyan-400 reveal flex flex-col justify-between active" style="transition-delay: 300ms;">
+          <div>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-14 h-14 rounded-xl bg-cyan-950/80 border border-cyan-500/40 flex-shrink-0 flex items-center justify-center text-cyan-300 group-hover:scale-110 transition-all">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="font-display font-bold text-lg text-white group-hover:text-cyan-300 transition-colors">Electric Claws</h3>
+                  <span class="text-[9px] font-mono uppercase bg-cyan-900/60 text-cyan-300 border border-cyan-500/30 px-2 py-0.5 rounded font-semibold">Mythic</span>
+                </div>
+                <span class="text-[10px] font-mono uppercase text-slate-400">Tier: Superior • Elemental</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 font-light leading-relaxed mb-4">A special claw-based combat style that allows to use electric attacks. Uncle Fester Teaches this style to players.</p>
+            <div class="space-y-1.5 text-[11px] font-medium text-slate-300 border-t border-purple-900/30 pt-3 mb-4">
+              <div class="flex justify-between"><span class="text-slate-500 font-mono">Style:</span> <span class="text-cyan-300 font-mono">Lightning Infused</span></div>
+              <div class="flex justify-between"><span class="text-slate-500 font-mono">Cooldown:</span> <span class="text-purple-300 font-mono">Moderate</span></div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-purple-900/30 flex items-center justify-between text-[11px] font-mono text-slate-400">
+            <span class="">KEY SKILL: <strong class="text-slate-200">Volt Discharge</strong></span>
+            <span class="text-cyan-400">[SLOT 03]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quests & Trials Section -->
+  <section id="quests" class="py-24 relative z-10 bg-void/60">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 reveal active">
+          <div class="text-xs font-display font-bold uppercase tracking-widest text-emerald-400 mb-3">Living Storylines</div>
+          <h2 class="text-3xl sm:text-5xl font-display font-black tracking-tight text-white uppercase mb-6 leading-tight">
+            Ascend Through <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-amber-300 to-purple-400 glow-purple">Quests &amp; Trials</span>
+          </h2>
+          <p class="text-slate-300 font-light leading-relaxed mb-8">
+            Dozens of hand-crafted NPCs populate the Bloxmore province. From eccentric potion alchemists in the deep woods to master duelists in the courtyard, every character offers rich lore quests.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-start gap-4 p-4 rounded-xl glass-card hover:border-purple-400/50">
+              <div class="w-8 h-8 rounded-lg bg-purple-900/50 border border-purple-500/40 flex items-center justify-center font-display font-bold text-xs text-purple-300 flex-shrink-0">01</div>
+              <div>
+                <h4 class="font-display font-bold text-white text-sm">NPC Dispatch &amp; Daily Contracts</h4>
+                <p class="text-xs text-slate-400 font-light mt-1">Accept high-value bounties targeting rogue beasts, cursed phantoms, and corrupt academy dropouts.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 rounded-xl glass-card hover:border-cyan-400/50">
+              <div class="w-8 h-8 rounded-lg bg-cyan-900/50 border border-cyan-500/40 flex items-center justify-center font-display font-bold text-xs text-cyan-300 flex-shrink-0">02</div>
+              <div>
+                <h4 class="font-display font-bold text-white text-sm">Dynamic Battle Objectives</h4>
+                <p class="text-xs text-slate-400 font-light mt-1">Conquer wave endurance challenges, defeat dungeon guardians, and secure mystical relic checkpoints.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 rounded-xl glass-card hover:border-emerald-400/50">
+              <div class="w-8 h-8 rounded-lg bg-emerald-900/50 border border-emerald-500/40 flex items-center justify-center font-display font-bold text-xs text-emerald-300 flex-shrink-0">03</div>
+              <div>
+                <h4 class="font-display font-bold text-white text-sm">Prestige &amp; Rank Evolution</h4>
+                <p class="text-xs text-slate-400 font-light mt-1">Earn Bloxmore Marks to unlock title flairs, rare ability mastery nodes, and exclusive vanity cloaks.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 reveal active" style="transition-delay: 200ms;">
+          <div class="glass-card p-8 rounded-3xl border border-purple-500/40 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-purple-900/40">
+              <div class="flex items-center gap-3">
+                <span class="w-3 h-3 rounded-full bg-amber-400 animate-ping"></span>
+                <span class="font-display font-bold text-sm tracking-wider uppercase text-white">Active Quest Journal</span>
+              </div>
+              <span class="text-xs font-mono text-bloxGold px-2.5 py-1 rounded bg-amber-950/60 border border-amber-500/30">TRACKING</span>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="p-4 rounded-xl bg-purple-950/40 border border-purple-800/30">
+                <div class="flex items-center justify-between text-xs mb-1">
+                  <span class="font-display font-bold text-purple-300">Chapter I: The Blood Rite</span>
+                  <span class="font-mono text-emerald-400">80%</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mb-2">Speak to Alchemist Vernon in the Whispering Clearing.</p>
+                <div class="w-full bg-purple-950 rounded-full h-1.5 overflow-hidden">
+                  <div class="bg-gradient-to-r from-purple-500 to-amber-400 h-1.5 rounded-full" style="width: 80%"></div>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-900/30">
+                <div class="flex items-center justify-between text-xs mb-1">
+                  <span class="font-display font-bold text-cyan-300">Raid Bounty: The Crypt Fiend</span>
+                  <span class="font-mono text-amber-400">IN PROGRESS</span>
+                </div>
+                <p class="text-[11px] text-slate-400">Enter The Graveyard mausoleum during the witching hour.</p>
+              </div>
+
+              <div class="pt-2 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                <span class="">REWARDS: <strong class="text-amber-300 font-mono">+1,200 Gold • 500 EXP</strong></span>
+                <span class="text-purple-400 font-mono">TIER II RUNES</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Development Roadmap -->
+  <section id="roadmap" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal active">
+        <div class="text-xs font-display font-bold uppercase tracking-widest text-cyan-400 mb-3">Constantly Expanding</div>
+        <h2 class="text-3xl sm:text-5xl font-display font-black tracking-tight text-white uppercase">
+          Continuous <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-amber-300 to-cyan-300 glow-purple">Evolution</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-purple-500 via-amber-400 to-cyan-400 mx-auto my-6 rounded-full"></div>
+        <p class="text-slate-300 font-light text-base sm:text-lg">
+          Bloxmore Academy is an evolving universe. Our development team regularly releases new realms, lineages, and abilities.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card p-8 rounded-2xl relative border-t-4 border-t-purple-500 reveal active">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono tracking-widest text-purple-400 uppercase">Phase 1: LIVE NOW</span>
+            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+          </div>
+          <h3 class="font-display font-bold text-xl text-white mb-3">The Foundation</h3>
+          <ul class="space-y-2.5 text-xs text-slate-400 font-light">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Bloxmore Citadel &amp; Forest biome</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>First 5 playable races &amp; awakening</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Core combat engine &amp; initial abilities</li>
+          </ul>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl relative border-t-4 border-t-cyan-400 reveal active" style="transition-delay: 150ms;">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono tracking-widest text-cyan-300 uppercase">Phase 2: IN TESTING</span>
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          </div>
+          <h3 class="font-display font-bold text-xl text-white mb-3">Rift of the Abyss</h3>
+          <ul class="space-y-2.5 text-xs text-slate-400 font-light">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>New subterranean cavern map</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>2 Secret Mythic Lineages</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Server-wide co-op World Boss Raids</li>
+          </ul>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl relative border-t-4 border-t-emerald-400 reveal active" style="transition-delay: 300ms;">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono tracking-widest text-emerald-400 uppercase">Phase 3: FUTURE</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          </div>
+          <h3 class="font-display font-bold text-xl text-white mb-3">Sovereign Guilds</h3>
+          <ul class="space-y-2.5 text-xs text-slate-400 font-light">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Player Academy Guilds &amp; Territory wars</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Ranked Competitive Duel Arena</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Custom spellcrafting &amp; relic forging</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contributors Section (4 Contributors) -->
+  <section id="contributors" class="py-24 relative z-10 border-t border-purple-900/20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal active">
+        <div class="text-xs font-display font-bold uppercase tracking-widest text-cyan-400 mb-3">THE ARCHITECTS &amp; VISIONARIES</div>
+        <h2 class="text-3xl sm:text-5xl font-display font-black tracking-tight text-white uppercase">
+          PROJECT <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-amber-300 to-emerald-400 glow-purple">CONTRIBUTORS</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-purple-500 via-amber-400 to-cyan-400 mx-auto my-6 rounded-full"></div>
+        <p class="text-slate-300 font-light text-base sm:text-lg leading-relaxed">The talented creators, world builders, and engineers bringing Bloxmore Academy to life.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Eminent -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-purple-400/60 reveal flex flex-col justify-between active">
+          <div class="relative mb-5 flex flex-col items-center">
+            <div class="relative w-28 h-28 rounded-2xl p-[2px] bg-gradient-to-tr from-purple-600 via-amber-400 to-cyan-400 shadow-lg shadow-purple-900/40">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4K_BkpUdBzZVU8BD4jLq7sbBO2ZwmY_i9RjtPpKQeYo6wHxDuGlqiVtLT08RylquqUzqDFc4Ln9hTGu_64_astirtywGymjqQ2i-Uef9myXmN9EsLnHnRp0fa2m3QENUmdmRdZI-OPx_JNOxqGGl3EXTaqPkcDHgZHKpdhHb2iVyLNfrRWTdo7pfSW9HHrrfVVEijg58JnvApBoe1UJYC3JrZcJnCHu1nhq7zwk4QbpTZNm8apPE-tmVQUlqEjdU" alt="Eminent" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-purple-950 border border-purple-500/40 text-[9px] font-mono tracking-widest text-purple-300 uppercase whitespace-nowrap">WORLD ARCHITECT</div>
+            </div>
+            <div class="text-center mt-5">
+              <h3 class="font-display font-bold text-lg text-white group-hover:text-purple-300 transition-colors">EmiDnenT</h3>
+              <p class="text-xs text-purple-400 font-medium mt-0.5">Lead Environment &amp; 3D Artist / Map Modeler</p>
+            </div>
+            <p class="text-xs text-slate-400 font-light mt-3 leading-relaxed text-center">Sculpted the sprawling gothic towers, untamed wilderness, and forgotten catacombs of Bloxmore with atmospheric 3D architecture.</p>
+          </div>
+          <div class="pt-4 border-t border-purple-900/30 flex items-center justify-between">
+            <span class="text-[10px] font-mono uppercase bg-purple-900/40 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded">Studio</span>
+            <a href="https://www.roblox.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-purple-300 hover:text-cyan-300 hover:border-cyan-400 hover:scale-110 transition-all" title="Roblox Profile">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.926 23.998L0 18.892 5.074.002 24 5.108l-5.074 18.89zM15.348 10.09l-5.282-1.417-1.416 5.285 5.283 1.416 1.415-5.284z"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- CrabZYBlox -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-purple-400/60 reveal flex flex-col justify-between active" style="transition-delay: 100ms;">
+          <div class="relative mb-5 flex flex-col items-center">
+            <div class="relative w-28 h-28 rounded-2xl p-[2px] bg-gradient-to-tr from-purple-600 via-pink-500 to-indigo-500 shadow-lg shadow-purple-900/40">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDQWA5nVOSJikOwW20pgUAqgpemA0j2vho5anqLDEJ1GTpcgwriX227mOTMruuHbrv4KJDMRU2LBIYkqWCm1R62erSPM1KPqD9cClL37L2kKQUVUx8-7DtOTSjGqka5LCsvnTGpO3S3XGWkzUgKJG8IIywfK_JeEqkyqbZHHo_I_hETiU0KRfe9nv-AnhUKrfm57aKsUE91jlHrKwRt9DQ_7ndrOfVjWfh4t-_WiqiK0UsFrfglz-I_Gei7r09pIE" alt="CrabZYBlox" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-purple-950 border border-purple-500/40 text-[9px] font-mono tracking-widest text-purple-300 uppercase whitespace-nowrap">CORE ENGINEER</div>
+            </div>
+            <div class="text-center mt-5">
+              <h3 class="font-display font-bold text-lg text-white group-hover:text-purple-300 transition-colors">CrabZYBlox</h3>
+              <p class="text-xs text-purple-400 font-medium mt-0.5">Lead Gameplay Systems &amp; Combat Scripter</p>
+            </div>
+            <p class="text-xs text-slate-400 font-light mt-3 leading-relaxed text-center">Engineered the fluid combat mechanics, supernatural power logic, responsive combo timings, and server-side hit registration.</p>
+          </div>
+          <div class="pt-4 border-t border-purple-900/30 flex items-center justify-between">
+            <span class="text-[10px] font-mono uppercase bg-purple-900/40 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded">Luau Engine</span>
+            <a href="https://www.roblox.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-purple-300 hover:text-cyan-300 hover:border-cyan-400 hover:scale-110 transition-all" title="Roblox Profile">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.926 23.998L0 18.892 5.074.002 24 5.108l-5.074 18.89zM15.348 10.09l-5.282-1.417-1.416 5.285 5.283 1.416 1.415-5.284z"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- DevIsHere_15 -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-emerald-400/60 reveal flex flex-col justify-between active" style="transition-delay: 200ms;">
+          <div class="relative mb-5 flex flex-col items-center">
+            <div class="relative w-28 h-28 rounded-2xl p-[2px] bg-gradient-to-tr from-emerald-500 via-cyan-500 to-purple-600 shadow-lg shadow-emerald-900/40">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsD17qFtjzlZKrnJ8ZKYOy7gU5MqYu6L93rn4MiAU8mxwYWSBOlgIKXYwAVLE9SpQhR9yLfjuiSb7UbL0oE-2fOw-HLiUHXP-hTrLOReauXSVtrzLhgcKPnIRu6YugC0N_MHgIKXf0J4boIIUZOWF3-3CeK8Fido_IFi8Y2JTBK6P34E6F5qHBqvJM2zuggwIS71y4rtcTaRUh_EFdsapOFTyfTuG32_D-O7vepOdOCim0R2DzL4Fre5ChzaLY3-Y" alt="DevIsHere_15" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/40 text-[9px] font-mono tracking-widest text-emerald-300 uppercase whitespace-nowrap">SYSTEMS DEV</div>
+            </div>
+            <div class="text-center mt-5">
+              <h3 class="font-display font-bold text-lg text-white group-hover:text-emerald-300 transition-colors">DevIsHere_15</h3>
+              <p class="text-xs text-emerald-400 font-medium mt-0.5">Gameplay &amp; Quest Systems Scripter</p>
+            </div>
+            <p class="text-xs text-slate-400 font-light mt-3 leading-relaxed text-center">Architected dynamic NPC questlines, procedural loot tables, progression scaling, and world event management for players.</p>
+          </div>
+          <div class="pt-4 border-t border-purple-900/30 flex items-center justify-between">
+            <span class="text-[10px] font-mono uppercase bg-emerald-900/40 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded">Gameplay Arch</span>
+            <a href="https://www.roblox.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-emerald-300 hover:text-cyan-300 hover:border-cyan-400 hover:scale-110 transition-all" title="Roblox Profile">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.926 23.998L0 18.892 5.074.002 24 5.108l-5.074 18.89zM15.348 10.09l-5.282-1.417-1.416 5.285 5.283 1.416 1.415-5.284z"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Egoist -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-cyan-400/60 reveal flex flex-col justify-between active" style="transition-delay: 300ms;">
+          <div class="relative mb-5 flex flex-col items-center">
+            <div class="relative w-28 h-28 rounded-2xl p-[2px] bg-gradient-to-tr from-cyan-400 via-amber-400 to-indigo-500 shadow-lg shadow-cyan-900/40">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTqI11EVit2unjD0tzGq0WxhxOs1ExDje60QvuQfPDx5IT_Dx8MmYJaUMTt-3RpvkOMBEOrHyjQMZMEXntOZMbnM49dvO1r5SDv9p_l0GFkPDaIkKZY1laoDlYwC2jRDz6ZmUkPaty1GmLYNaKRNjoebAFfdne_HvX94eP_fcObXCJvZ_gs6N-jDGcjU2ca04Ld-LMUj013jdEuXvjzM-d5h_7JerHw-nTpqRVDRf9M4oZ50kWu6fuG3kj6V2Uvuk" alt="Egoist" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/40 text-[9px] font-mono tracking-widest text-cyan-300 uppercase whitespace-nowrap">WEB ARCHITECT</div>
+            </div>
+            <div class="text-center mt-5">
+              <h3 class="font-display font-bold text-lg text-white group-hover:text-cyan-300 transition-colors">Egoist</h3>
+              <p class="text-xs text-cyan-300 font-medium mt-0.5">Web Developer &amp; UI/UX Designer</p>
+            </div>
+            <p class="text-xs text-slate-400 font-light mt-3 leading-relaxed text-center">Crafted this atmospheric promotional portal, blending immersive game aesthetic, interactive animations, and responsive UI.</p>
+          </div>
+          <div class="pt-4 border-t border-purple-900/30 flex items-center justify-between">
+            <span class="text-[10px] font-mono uppercase bg-cyan-900/40 text-cyan-300 border border-cyan-500/30 px-2 py-0.5 rounded">Frontend / UI</span>
+            <a href="https://www.roblox.com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-300 hover:text-cyan-300 hover:border-cyan-400 hover:scale-110 transition-all" title="Roblox Profile">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.926 23.998L0 18.892 5.074.002 24 5.108l-5.074 18.89zM15.348 10.09l-5.282-1.417-1.416 5.285 5.283 1.416 1.415-5.284z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community & Socials (Discord, YouTube, Roblox Group) -->
+  <section id="community" class="py-24 relative z-10 border-t border-purple-900/20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal active">
+        <div class="text-xs font-display font-bold uppercase tracking-widest text-cyan-400 mb-3">JOIN THE ORDER • COMMUNITY &amp; SOCIALS</div>
+        <h2 class="text-3xl sm:text-5xl font-display font-black tracking-tight text-white uppercase">
+          CONNECT WITH <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-amber-300 to-emerald-400 glow-purple">THE ACADEMY</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-purple-500 via-amber-400 to-cyan-400 mx-auto my-6 rounded-full"></div>
+        <p class="text-slate-300 font-light text-base sm:text-lg leading-relaxed">Join thousands of acolytes, report bugs, receive exclusive sneak peeks, redeem code drops, and watch official gameplay breakdowns.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Discord -->
+        <div class="glass-card rounded-3xl p-8 sm:p-10 relative group hover:border-purple-400 reveal flex flex-col justify-between overflow-hidden active">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="w-16 h-16 rounded-2xl bg-purple-950/80 border border-purple-500/40 flex items-center justify-center text-purple-300 shadow-lg shadow-purple-900/50 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"></path></svg>
+              </div>
+              <span class="text-[10px] font-mono uppercase bg-purple-950 text-purple-300 border border-purple-500/40 px-2.5 py-1 rounded-md">Active Community</span>
+            </div>
+            <h3 class="font-display font-bold text-2xl text-white group-hover:text-purple-300 transition-colors mb-3">Official Discord Realm</h3>
+            <p class="text-sm text-slate-300 font-light leading-relaxed mb-6">Hang out with developers and players, participate in weekly game events, get instant patch notes, and unlock exclusive community perks.</p>
+          </div>
+          <div class="pt-4 border-t border-purple-900/30">
+            <a href="https://discord.gg/tdn7Gp7Wnt" target="_blank" rel="noopener noreferrer" class="btn-shimmer w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg shadow-purple-900/50 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
+              <span class="">Join Discord Server</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- YouTube -->
+        <div class="glass-card rounded-3xl p-8 sm:p-10 relative group hover:border-red-400 reveal flex flex-col justify-between overflow-hidden active" style="transition-delay: 100ms;">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="w-16 h-16 rounded-2xl bg-purple-950/80 border border-purple-500/40 flex items-center justify-center text-red-400 shadow-lg shadow-purple-900/50 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+              </div>
+              <span class="text-[10px] font-mono uppercase bg-purple-950 text-red-400 border border-purple-500/40 px-2.5 py-1 rounded-md">Official Channel</span>
+            </div>
+            <h3 class="font-display font-bold text-2xl text-white group-hover:text-red-400 transition-colors mb-3">The Midnight Guests</h3>
+            <p class="text-sm text-slate-300 font-light leading-relaxed mb-6">Watch character build spotlights, ability breakdowns, major update trailers, and developer playthroughs directly from the creators.</p>
+          </div>
+          <div class="pt-4 border-t border-purple-900/30">
+            <a href="https://www.youtube.com/@themidnightguestsoffical" target="_blank" rel="noopener noreferrer" class="btn-shimmer w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 hover:scale-[1.02] active:scale-95 transition-all text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-3">
+              <span class="">Subscribe on YouTube</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Roblox Group -->
+        <div class="glass-card rounded-3xl p-8 sm:p-10 relative group hover:border-cyan-400 reveal flex flex-col justify-between overflow-hidden active" style="transition-delay: 200ms;">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="w-16 h-16 rounded-2xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-300 shadow-lg shadow-cyan-900/50 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M18.926 23.998L0 18.892 5.074.002 24 5.108l-5.074 18.89zM15.348 10.09l-5.282-1.417-1.416 5.285 5.283 1.416 1.415-5.284z"></path></svg>
+              </div>
+              <span class="text-[10px] font-mono uppercase bg-cyan-950 text-cyan-300 border border-cyan-500/40 px-2.5 py-1 rounded-md">Official Guild</span>
+            </div>
+            <h3 class="font-display font-bold text-2xl text-white group-hover:text-cyan-300 transition-colors mb-3">Official Roblox Group</h3>
+            <p class="text-sm text-slate-300 font-light leading-relaxed mb-6">Join our official in-game group to receive in-game cosmetic badges, exclusive robes, and direct development announcements.</p>
+          </div>
+          <div class="pt-4 border-t border-purple-900/30">
+            <a href="https://www.roblox.com/share/g/579977704" target="_blank" rel="noopener noreferrer" class="btn-shimmer w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-600 via-indigo-600 to-purple-600 hover:scale-[1.02] active:scale-95 transition-all text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-3">
+              <span class="">Join Roblox Group</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Banner -->
+  <section class="py-20 relative z-10">
+    <div class="max-w-5xl mx-auto px-6 reveal active">
+      <div class="glass-card rounded-3xl p-10 sm:p-14 text-center relative overflow-hidden border-2 border-purple-500/50 shadow-2xl shadow-purple-950/80">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-900/30 via-amber-900/20 to-cyan-900/30 pointer-events-none"></div>
+        <span class="text-xs font-mono uppercase tracking-widest text-bloxGold mb-4 inline-block">ARE YOU READY TO AWAKEN?</span>
+        <h2 class="text-3xl sm:text-5xl font-display font-black text-white uppercase mb-6 tracking-tight">
+          Step Into <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-amber-300 to-cyan-300">Bloxmore Academy</span> Today
+        </h2>
+        <p class="text-slate-300 max-w-xl mx-auto mb-8 font-light text-sm sm:text-base leading-relaxed">
+          Join thousands of players already forging their legacy. Free to play on PC, Mobile, and Console.
+        </p>
+        <div class="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-purple-950/90 border border-purple-500/50 text-white font-display font-bold text-sm uppercase tracking-widest shadow-2xl shadow-purple-950/80 cursor-default"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span><span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-amber-200 to-cyan-300">Coming Soon • In Development</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Atmospheric Footer with Studio Lockup -->
+  <footer class="py-16 relative z-10 border-t border-purple-900/40 bg-void/95 text-slate-400 text-xs">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-14 border-b border-purple-900/30">
+      <div class="lg:col-span-5 space-y-4">
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-purple-950/80 border border-purple-500/30 p-2 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-900/40">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRUiUoyvGJDFz-9OeZxvDeG79b-nbDhChw8VlwX0neYcFAwOkuQfIMRgH6Wyl6pdHjcs4VLJt-rmeOFa02gNThuabcCT6bHZ-CePSmVeKxF4dp_MgOXO1gtN8q5mJpBCONT3EDHAzjezwXem3YWvbCDlifjmHooRyAZ6HwSQZ6_gCweh6XT0SlylAoBIdK9s0U1A93mpjdQQN7zDLIe-mBavhwOCNrQG9gTBSEKmv7t3xZQ--v-pF1pDWqW-gV3ak" alt="The Midnight Guests Logo" class="w-full h-full object-contain group-hover:scale-105 transition-transform">
+          </div>
+          <div>
+            <div class="font-display font-bold text-base tracking-widest text-white uppercase">The Midnight Guests</div>
+            <div class="text-[10px] font-mono tracking-wider text-purple-400 uppercase">Official Studio Production</div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-400 font-light leading-relaxed max-w-sm">
+          A premier dark fantasy experience on Roblox. Awaken dormant supernatural lineages, master kinetic martial arts, and conquer forsaken realms.
+        </p>
+        <div class="flex items-center gap-2 pt-2">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-950/70 border border-purple-500/30 text-[10px] font-mono text-purple-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="">VER 0.8.4 ALPHA</span>
+          </span>
+          <span class="px-3 py-1 rounded-full bg-void border border-purple-900/40 text-[10px] font-mono text-slate-400">
+            LUAU ENGINE
+          </span>
+        </div>
+      </div>
+
+      <div class="lg:col-span-4 space-y-3">
+        <h4 class="font-display font-bold text-xs uppercase tracking-widest text-white mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-bloxGold"></span>
+          Quick Links
+        </h4>
+        <ul class="grid grid-cols-2 gap-2 text-xs font-light text-slate-400">
+          <li class=""><a href="#hero" class="hover:text-bloxGold transition-colors flex items-center gap-1.5"><span class="">›</span> About Academy</a></li>
+          <li class=""><a href="#world" class="hover:text-bloxGold transition-colors flex items-center gap-1.5"><span class="">›</span> Exploration Realms</a></li>
+          <li class=""><a href="#races" class="hover:text-bloxGold transition-colors flex items-center gap-1.5"><span class="">›</span> Choose Lineage</a></li>
+          <li class=""><a href="#powers" class="hover:text-bloxGold transition-colors flex items-center gap-1.5"><span class="">›</span> Abilities &amp; Arts</a></li>
+          <li class=""><a href="#quests" class="hover:text-bloxGold transition-colors flex items-center gap-1.5"><span class="">›</span> Quests &amp; Trials</a></li>
+          <li class=""><a href="#roadmap" class="hover:text-bloxGold transition-colors flex items-center gap-1.5"><span class="">›</span> Roadmap</a></li>
+          <li class=""><a href="#contributors" class="hover:text-bloxGold transition-colors flex items-center gap-1.5"><span class="">›</span> Contributors</a></li>
+          <li class=""><a href="#community" class="hover:text-bloxGold transition-colors flex items-center gap-1.5"><span class="">›</span> Community Hub</a></li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-3 space-y-4">
+        <h4 class="font-display font-bold text-xs uppercase tracking-widest text-white mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          Join The Community
+        </h4>
+        <p class="text-xs text-slate-400 font-light leading-relaxed">
+          Stay synchronized with active game balances, redeem promo codes, and commune with developers.
+        </p>
+        <div class="flex items-center gap-3 pt-1">
+          <a href="https://discord.gg/tdn7Gp7Wnt" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-purple-300 hover:text-white hover:border-purple-400 hover:scale-110 transition-all" title="Discord">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"></path></svg>
+          </a>
+          <a href="https://www.youtube.com/@themidnightguestsoffical" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-red-400 hover:text-white hover:border-red-400 hover:scale-110 transition-all" title="YouTube">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+          </a>
+          <a href="https://www.roblox.com/share/g/579977704" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-cyan-300 hover:text-white hover:border-cyan-400 hover:scale-110 transition-all" title="Roblox Group">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.926 23.998L0 18.892 5.074.002 24 5.108l-5.074 18.89zM15.348 10.09l-5.282-1.417-1.416 5.285 5.283 1.416 1.415-5.284z"></path></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <p class="text-xs text-slate-500 font-light leading-relaxed max-w-2xl text-center md:text-left">
+        Echoes of a forgotten realm. Bound by supernatural covenant. This is a promotional preview and game development hub for Bloxmore Academy. Content, stats, and abilities are subject to balancing and continuous evolution.
+      </p>
+      <p class="text-center md:text-right font-light text-slate-500 text-xs whitespace-nowrap">
+        © 2025 The Midnight Guests. Bloxmore Academy is an independent experience on Roblox.
+      </p>
+    </div>
+  </div>
+</footer>
+
+  <!-- Ambient Particles & Scroll Reveal Script -->
+  <script>
+    // Particle Canvas Animation
+    (function initParticles() {
+      const canvas = document.getElementById('spark-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = window.innerWidth;
+      let h = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      });
+
+      const particles = [];
+      const particleCount = Math.min(50, Math.floor(w / 30));
+      const colors = ['#a855f7', '#d4af37', '#7c3aed', '#06b6d4', '#ffd700'];
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 2 + 0.6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: -(Math.random() * 0.6 + 0.2),
+          alpha: Math.random() * 0.6 + 0.2,
+          pulseSpeed: Math.random() * 0.02 + 0.008
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, w, h);
+        for (let p of particles) {
+          p.y += p.vy;
+          p.x += p.vx;
+          p.alpha += Math.sin(Date.now() * p.pulseSpeed) * 0.005;
+
+          if (p.y < -10) {
+            p.y = h + 10;
+            p.x = Math.random() * w;
+          }
+          if (p.x < -10) p.x = w + 10;
+          if (p.x > w + 10) p.x = -10;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = Math.max(0.1, Math.min(0.8, p.alpha));
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = p.color;
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+
+    // Scroll Reveal with IntersectionObserver
+    (function initScrollReveals() {
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        }, { threshold: 0.12 });
+
+        reveals.forEach(el => observer.observe(el));
+      } else {
+        reveals.forEach(el => el.classList.add('active'));
+      }
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>
